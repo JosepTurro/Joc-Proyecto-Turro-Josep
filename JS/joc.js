@@ -50,14 +50,37 @@ window.onload = () => {
        }
    }
 
-   const botTopRight = new Botelles (1255, 76);
+    const botTopRight = new Botelles (1255, 76);
     const botTopLeft = new Botelles (774, 76);
     const botBottomRight = new Botelles (1255, 546);
     const botBottomLeft = new Botelles (774, 546);
 
     botellesArr = [botTopRight, botTopLeft, botBottomRight, botBottomLeft];
+
+    class Obstacle {
+        constructor(){
+            let maximaPosicio_x = 680;
+            this.width = 70;
+            this.height = 70;
+            this.x = Math.floor(Math.random() * (maximaPosicio_x - 70));
+            this.y = 600;
+
+        }
+
+        pintar(){
+            ctx.fillStyle = 'black'
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+        choca (){
+             if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
+                 clearInterval(interval);
+                
+             }
+
+        }
+    }
     
-    // const botellesArr = [];   ///// proba botelles
+    
 
     
     
@@ -150,28 +173,7 @@ window.onload = () => {
 
    
 
-    class Obstacle {
-        constructor(){
-            let maximaPosicio_x = 680;
-            this.width = 70;
-            this.height = 70;
-            this.x = Math.floor(Math.random() * (maximaPosicio_x - 70));
-            this.y = 600;
-
-        }
-
-        pintar(){
-            ctx.fillStyle = 'black'
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
-        choca (){
-             if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
-                 clearInterval(interval);
-                
-             }
-
-        }
-    }
+    
 
     // class ParetsFoc {
     //     constructor (){
