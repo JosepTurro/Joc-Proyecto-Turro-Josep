@@ -1,17 +1,39 @@
 //Quan està amb majusccules (comentaris) es el titol de un apartat
 
+
 window.onload = () => { 
     document.getElementById('start-button').onclick = () => {
         startGame();
+        setInterval(updateCountdown, 1000)
     };
+
+    
+
+    const countDownEl = document.getElementById("countdown")
+    const startingMinutes = 01;
+    let time = startingMinutes * 60
+    function updateCountdown() {
+    const minutes = Math.floor(time / 60)
+    let seconds = time % 30
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    countDownEl.innerHTML = `${seconds}`
+    time--
+}
+
     
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
+
+    //Aqui posem lafoto de "clik star game i intentar sortir de festa si pots"
+    // ctx.fillStyle ('green');
+    // ctx.fillRect(2,2, 800, 500);
 
     // DEFINICION DE VARIABLES/CONSTANTES
     //Fem una variable per guardar i crear img per poder interactuar amb ella
     const imgFondo = document.createElement("img");
     imgFondo.setAttribute("src", "images/fondo_img.png");
+    const imgMurFoc = document.createElement("img");
+    // imgMurFoc.setAttributez
     let frames = 0;
     let interval;
     let jugador_x = canvas.width-1340;
@@ -20,6 +42,7 @@ window.onload = () => {
     const obstaclesArr = [];
     let jugador;
     let botellesArr = [];
+    
 
     class Botelles {
         constructor(x, y){
@@ -49,7 +72,20 @@ window.onload = () => {
 
     botellesArr = [botTopRight, botTopLeft, botBottomRight, botBottomLeft, centerBot];
     
+    class ParedFoc{
+        constructor(x,y){
+            this.x = x;
+            this.y = y;
+            this.height = 251;
+            this.width =73;  
+        }
+        pintarFoc(){
 
+        }
+        
+    }
+    
+   /* BOOONUUUS
     class Persesguidor {
         constructor(){
             this.width = 50;
@@ -66,8 +102,9 @@ window.onload = () => {
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
 
-    }
 
+    }
+    */
     class Obstacle {
         constructor(){
             let maximaPosicio_x = 680;
@@ -90,6 +127,7 @@ window.onload = () => {
 
         }
     }
+    
     
     
     function startGame() {
@@ -143,6 +181,9 @@ window.onload = () => {
 
     }
 
+    
+    
+
     // MOVIMENT DEL TT
 
     document.body.addEventListener("keydown", (e) => {
@@ -165,39 +206,9 @@ window.onload = () => {
 
     });
 
-   
-
-    
-
-    // class ParetsFoc {
-    //     constructor (){
-    //         this.width = 22;
-    //         this.height = 239;
-    //         this
-
-    //     }
-    // }
-
-    
-
-   
-
-    
-    
-    // class Persesguidor {
-    //     constructor(){
-    //         let minimaPosicio_x = 710;
-    //         let maximaPosicioPer_x = 
-    //         this.width = 70;
-    //         this.height = 70;
-    //         this.x = Math.floor(Math.random() * (maximaPosicio_x - 70));
-    //         this.y = 600; 
-    //     }
-    // }
-
      
 }
 
 
 
-// botelles = queda ficar el choca a la classe i despres ficar el for en elupdate a sota de linea 86
+
