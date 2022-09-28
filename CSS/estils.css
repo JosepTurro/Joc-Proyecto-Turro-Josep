@@ -15,6 +15,23 @@ body button {
 
 body{
     text-align: center;
+    padding-top: 20px;
+
+}
+
+#tempo{
+    border: 2px solid black;
+    background-color: aqua;
+    
+    margin-top: 30px;
+    margin-left: 750px;
+    margin-right: 750px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.tempoNum{
+    font-size: 25px;
 }
 
 

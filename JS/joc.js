@@ -4,11 +4,7 @@ window.onload = () => {
     document.getElementById('start-button').onclick = () => {
         startGame();
     };
-
-
-
-
-
+    
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -24,7 +20,6 @@ window.onload = () => {
     const obstaclesArr = [];
     let jugador;
     let botellesArr = [];
-    
 
     class Botelles {
         constructor(x, y){
@@ -32,30 +27,46 @@ window.onload = () => {
             this.y = y;
             this.height = 70;
             this.width = 40; 
-           
         }
         pintarBot (){
             ctx.fillStyle = 'red';
             ctx.fillRect (this.x, this.y, this.width, this.height);
-           
-       }
+        }
        chocaBot (){
-           
-           if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
-               clearInterval(interval);
-              
-           }
-
-           
-       }
+        
+        if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
+            return true
+        }
+           return false;
+        }
    }
 
     const botTopRight = new Botelles (1255, 76);
+    const centerBot = new Botelles (1030,318);
     const botTopLeft = new Botelles (774, 76);
-    const botBottomRight = new Botelles (1255, 546);
-    const botBottomLeft = new Botelles (774, 546);
+    const botBottomRight = new Botelles (1255, 446);
+    const botBottomLeft = new Botelles (774, 446);
 
-    botellesArr = [botTopRight, botTopLeft, botBottomRight, botBottomLeft];
+    botellesArr = [botTopRight, botTopLeft, botBottomRight, botBottomLeft, centerBot];
+    
+
+    class Persesguidor {
+        constructor(){
+            this.width = 50;
+            this.height = 50;
+            let maxPos_x = 1347 - this.width;
+            let miniPos_x = 706;
+            let maxPos_y = 23;
+            let miniPos_y = 612 - this.height;
+            this.x = ( Math.floor(Math.random() * (Math.floor(maxPos_x) - Math.ceil(miniPos_x)) +  Math.ceil(miniPos_x)));
+            this.y = ( Math.floor(Math.random() * (Math.floor(maxPos_y) - Math.ceil(miniPos_y)) +  Math.ceil(miniPos_y)));
+        }
+        pintarPers(){
+            ctx.fillStyle='blue';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+
+    }
 
     class Obstacle {
         constructor(){
@@ -81,30 +92,19 @@ window.onload = () => {
     }
     
     
-
-    
-    
-    
     function startGame() {
        
         interval = setInterval(update, 20);
-        
-        
     }
 
     function update(){
        frames ++;
        
-        
         //LIMPIAR
         //RECALCULAR ---- Posicio del obstacles.
         obstaclesArr.forEach((obstaculo) => {
             obstaculo.y -= 6.5; // velocitat obstacle
         })
-        
-        //botelles
-       
-
         
         if (frames % 100 == 0){ // aqui fas que quan acbi la arry de obstacles retorni
             //crear obstaculo
@@ -112,8 +112,6 @@ window.onload = () => {
             obstaclesArr.push(obstacle);
         }
         
-
-
         // REPINTAR
         //fondu
         ctx.drawImage(imgFondo, 0, 0, canvas.getAttribute("width"), canvas.getAttribute("height"));
@@ -122,29 +120,26 @@ window.onload = () => {
         jugador= ctx.fillRect(jugador_x, jugador_y, 40, 40);
         //botelles
        
-        
-
-
         // obstacles
         obstaclesArr.forEach((obstacle) => {    // Aquest loop far que recorri laarry de objectes (que vagin surtin)
             obstacle.pintar();
             obstacle.choca();
-            
-            
-           
+             if (jugador_x > 695){
+                
+                 /////////////////////////////// que surti una imatge de pantalla passada.
+             }
         })
         
         // botelles // nomes aqui xq son ffixes;
-        botellesArr.forEach((botella)=>{
+        botellesArr.forEach((botella, k)=>{
+            let comprovacio = botella.chocaBot();
+            if (comprovacio){
+                console.log ("aaa", botellesArr);
+                botellesArr.splice(k,1);
+                return;
+            }
             botella.pintarBot();
-            botella.chocaBot();
         })
-
-        
-
-
-       
-        
 
     }
 
@@ -157,19 +152,18 @@ window.onload = () => {
           if(jugador_x > 22) jugador_x -= 10;
         //   if(jugador_x> canvas.width-62) jugador_x -=0;
         } else if (e.key == "ArrowRight"){
-          if (jugador_x < (canvas.width - 62)) jugador_x += 10;
+          if (jugador_x < (canvas.width - 62)) jugador_x += 30;
         }
         //Moviment eix y.
         if (e.key == "ArrowUp") {
             if(jugador_y > 22) jugador_y -= 10;
           } else if (e.key == "ArrowDown"){
-            if (jugador_y < (canvas.height - 62)) jugador_y += 10;
+            if (jugador_y < (canvas.height - 62)) jugador_y += 30;
     
             // if (jugador_y>canvas.height-62)jugador_y -=0;
           }
 
-        
-      })
+    });
 
    
 
