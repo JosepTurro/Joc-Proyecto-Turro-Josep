@@ -1,24 +1,26 @@
 //Quan està amb majusccules (comentaris) es el titol de un apartat
 
 
-window.onload = () => { 
+// window.onload = () => { 
+    
+    
     document.getElementById('start-button').onclick = () => {
         startGame();
         setInterval(updateCountdown, 1000)
     };
 
+    let time;
     
-
     const countDownEl = document.getElementById("countdown")
     const startingMinutes = 01;
-    let time = startingMinutes * 60
+    time = startingMinutes * 60
     function updateCountdown() {
     const minutes = Math.floor(time / 60)
     let seconds = time % 30
     seconds = seconds < 10 ? "0" + seconds : seconds;
     countDownEl.innerHTML = `${seconds}`
     time--
-}
+    }
 
     
     const canvas = document.getElementById("canvas");
@@ -42,6 +44,7 @@ window.onload = () => {
     const obstaclesArr = [];
     let jugador;
     let botellesArr = [];
+    let foc = [];
     
 
     class Botelles {
@@ -80,10 +83,24 @@ window.onload = () => {
             this.width =73;  
         }
         pintarFoc(){
-
+            ctx.fillStyle = 'orange'
+            ctx.fillRect (this.x, this.y, this.width, this.height);
+            
+        }
+        chocaFoc (){
+            if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
+                clearInterval(interval);
+                gameOver();
+               
+            }  
         }
         
     }
+
+    const topFoc = new ParedFoc(623,0);
+    const botFoc = new ParedFoc(623,379);
+    foc = [topFoc, botFoc];
+
     
    /* BOOONUUUS
     class Persesguidor {
@@ -105,6 +122,7 @@ window.onload = () => {
 
     }
     */
+    let chocaCompr = false;
     class Obstacle {
         constructor(){
             let maximaPosicio_x = 680;
@@ -122,14 +140,13 @@ window.onload = () => {
         choca (){
              if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
                  clearInterval(interval);
+                    gameOver();
                 
              }
 
         }
     }
-    
-    
-    
+        
     function startGame() {
        
         interval = setInterval(update, 20);
@@ -137,7 +154,6 @@ window.onload = () => {
 
     function update(){
        frames ++;
-       
         //LIMPIAR
         //RECALCULAR ---- Posicio del obstacles.
         obstaclesArr.forEach((obstaculo) => {
@@ -162,10 +178,9 @@ window.onload = () => {
         obstaclesArr.forEach((obstacle) => {    // Aquest loop far que recorri laarry de objectes (que vagin surtin)
             obstacle.pintar();
             obstacle.choca();
-             if (jugador_x > 695){
-                
-                 /////////////////////////////// que surti una imatge de pantalla passada.
-             }
+
+
+           
         })
         
         // botelles // nomes aqui xq son ffixes;
@@ -175,9 +190,21 @@ window.onload = () => {
                 console.log ("aaa", botellesArr);
                 botellesArr.splice(k,1);
                 return;
+            } else if (botellesArr.length == 0){ //////////////////////////////////// proba (per variar no funciona) per preguntar Mariona
+                win();
             }
             botella.pintarBot();
         })
+
+        // Foc
+        foc.forEach((mur)=>{
+            mur.pintarFoc();
+            mur.chocaFoc();
+
+        })
+
+        
+        
 
     }
 
@@ -206,8 +233,20 @@ window.onload = () => {
 
     });
 
+    function gameOver() {
+        ctx.fillStyle='green'
+        ctx.fillRect (0,0,400,600);
+        
+    }
+
+    function win(){
+        ctx.fillStyle='blue'
+        ctx.fillRect (0,700,400,600);
+    }
+
+
      
-}
+// }
 
 
 
