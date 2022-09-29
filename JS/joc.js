@@ -3,23 +3,22 @@
 
 // window.onload = () => { 
     
-    
+    let intervalo;
     document.getElementById('start-button').onclick = () => {
         startGame();
-        setInterval(updateCountdown, 1000)
+       intervalo= setInterval(updateCountdown, 700)
     };
 
     
     
+   
     const countDownEl = document.getElementById("countdown")
-    const startingMinutes = 01;
-    let time = startingMinutes * 60
+    
+    let time =  30;
+    
     function updateCountdown() {
-        const minutes = Math.floor(time / 60)
-        if (time==0){
-           time = startingMinutes*60
-           gameOver()
-        }
+       
+        const minutes = Math.floor(time / 30)
         let seconds = time % 30
         seconds = seconds < 10 ? "0" + seconds : seconds;
         countDownEl.innerHTML = `${seconds}`
@@ -32,11 +31,9 @@
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    //Aqui posem lafoto de "clik star game i intentar sortir de festa si pots"
-    // ctx.fillStyle ('green');
-    // ctx.fillRect(2,2, 800, 500);
+    
 
-    // DEFINICION DE VARIABLES/CONSTANTES
+    // DEFINICIÓ DE VARIABLES/CONSTANTES
     //Fem una variable per guardar i crear img per poder interactuar amb ella
     const imgFondo = document.createElement("img");
     imgFondo.setAttribute("src", "images/fondo_massa_bo.png");
@@ -52,7 +49,7 @@
     ratoli.setAttribute("src", "images/ratolinet.png");
     
     
-    // imgMurFoc.setAttributez
+    
     let frames = 0;
     let interval;
     let jugador_x = canvas.width-1340;
@@ -62,6 +59,8 @@
     let jugador;
     let botellesArr = [];
     let foc = [];
+
+    // DEINICIÓ DE CLASSES (EXCEPTE JUGAR QUE EL POSEM DINS UPDATE)
     
     
 
@@ -173,11 +172,12 @@
     function startGame() {
        
         interval = setInterval(update, 20);
+        
     }
 
     function update(){
        frames ++;
-        //LIMPIAR
+        //LIMPPIAR
         //RECALCULAR ---- Posicio del obstacles.
         obstaclesArr.forEach((obstaculo) => {
             obstaculo.y -= 6.5; // velocitat obstacle
@@ -196,7 +196,7 @@
         //ctx.fillStyle = 'green'
         jugador= ctx.drawImage(fotoJugador, jugador_x, jugador_y, 73, 73); //ctx.fillRect(jugador_x, jugador_y, 73, 73);
         
-        //botelles
+        
        
         // obstacles
         obstaclesArr.forEach((obstacle) => {    // Aquest loop far que recorri laarry de objectes (que vagin surtin)
@@ -207,18 +207,19 @@
            
         })
         
-        // botelles // nomes aqui xq son ffixes;
-        botellesArr.forEach((botella, k)=>{
-            let comprovacio = botella.chocaBot();
+        
+        // botelles // nomes aquì xq son fixes;
+        botellesArr.forEach((botella, k)=>{     //Aqui recorrem l'array de botelles per comprobar si chocca o no gracies a la variable
+            let comprovacio = botella.chocaBot();// i si choca es true doncs la traiem del array
             if (comprovacio){
                
                 botellesArr.splice(k,1);
                 return;
             } 
             
-            botella.pintarBot();
+            botella.pintarBot();  // fem que les pinti cada frame // ja que el jugador esta en moviment
         })
-        if (botellesArr.length == 0){ //////////////////////////////////// proba (per variar no funciona) per preguntar Mariona
+        if (botellesArr.length == 0){ // si l'array de botelles esta buida hem guanyat
             win();
         }
 
@@ -230,9 +231,18 @@
         })
 
         
+        if (time< 0){
+            clearInterval(intervalo);
+            gameOver()
+            
+        }
+       
+        
         
 
     }
+
+   
 
     
     
@@ -259,6 +269,8 @@
 
     });
 
+    // Definim el gameOver i el win
+
     function gameOver() {
         ctx.fillStyle='green'
         ctx.fillRect (0,0,400,600);
@@ -269,6 +281,8 @@
         ctx.fillStyle='blue'
         ctx.fillRect (0,300,400,600);
     }
+
+    
 
 
      
