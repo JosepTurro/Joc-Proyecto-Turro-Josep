@@ -26,7 +26,7 @@
     }
 
     
-
+    
     
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -172,6 +172,8 @@
     function startGame() {
        
         interval = setInterval(update, 20);
+        document.getElementById("start").remove();
+        
         
     }
 
@@ -274,12 +276,16 @@
     function gameOver() {
         ctx.fillStyle='green'
         ctx.fillRect (0,0,400,600);
+        clearInterval(intervalo);
+        clearInterval(interval);
         
     }
 
     function win(){
         ctx.fillStyle='blue'
         ctx.fillRect (0,300,400,600);
+        clearInterval(intervalo);
+        clearInterval(interval);
     }
 
     

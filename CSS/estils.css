@@ -1,21 +1,50 @@
 
-canvas{
+ canvas{
     border: 2px solid black;
+    margin-top: 50px;
+    z-index: 0;
+} 
+
+#start{
+    max-width: 1370px;
+    
+    
+    
+    position: absolute;
+    margin-left: 740px;
+    margin-top: 300px;
+    z-index: 1;
+
+
 }
 
 body button {
     font-size: 30px;
-    background-color: rgb(2, 2, 57);
-    color: #fff;
+    background-color: rgba(0,0,0,0);
+    /* color: #fff; */
+    border: none;
+    font-size: 50px;
+
     
-    box-shadow: 0;
+    
+    
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     border-radius: 5px;
+    color: violet;
+   
+   
+    
+    
    
 }
 
 body{
     text-align: center;
     padding-top: 20px;
+    background-image: url("../images/backgroungImg.jpg");
 
 }
 
@@ -30,8 +59,17 @@ body{
     padding-bottom: 50px;
 }
 
-.tempoNum{
-    font-size: 25px;
+
+
+/* #game-board{
+   border: 2px solid black; 
+} */
+
+#countdown{
+    color: white;
+    margin-top: 20px;
+    font-size: 50px;
+    font-weight: bold;
 }
 
 
