@@ -15,11 +15,15 @@
     const startingMinutes = 01;
     let time = startingMinutes * 60
     function updateCountdown() {
-    const minutes = Math.floor(time / 60)
-    let seconds = time % 30
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    countDownEl.innerHTML = `${seconds}`
-    time--
+        const minutes = Math.floor(time / 60)
+        if (time==0){
+           time = startingMinutes*60
+           gameOver()
+        }
+        let seconds = time % 30
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        countDownEl.innerHTML = `${seconds}`
+        time--
     }
 
     
@@ -35,9 +39,19 @@
     // DEFINICION DE VARIABLES/CONSTANTES
     //Fem una variable per guardar i crear img per poder interactuar amb ella
     const imgFondo = document.createElement("img");
-    imgFondo.setAttribute("src", "images/fondo_img.png");
+    imgFondo.setAttribute("src", "images/fondo_massa_bo.png");
     const imgMurFoc = document.createElement("img");
     imgMurFoc.setAttribute("src", "images/ppp.png");
+    const imgBot = document.createElement('img');
+    imgBot.setAttribute("src", "images/botella_a.png");
+    const fotoJugador = document.createElement('img');
+    fotoJugador.setAttribute("src", "images/foto_chill.png");
+    //  const fotoJugadorChill = document.createElement('img');
+    //  fotoJugador.setAttribute("src", "images/cara_enfado.png");
+    const ratoli = document.createElement('img');
+    ratoli.setAttribute("src", "images/ratolinet.png");
+    
+    
     // imgMurFoc.setAttributez
     let frames = 0;
     let interval;
@@ -49,21 +63,25 @@
     let botellesArr = [];
     let foc = [];
     
+    
 
     class Botelles {
         constructor(x, y){
             this.x = x;
             this.y = y;
-            this.height = 70;
-            this.width = 40; 
+            this.height = 73;
+            this.width = 73; 
         }
         pintarBot (){
-            ctx.fillStyle = 'red';
-            ctx.fillRect (this.x, this.y, this.width, this.height);
+            //  ctx.fillStyle = 'red';
+            //   ctx.fillRect (this.x, this.y, this.width, this.height);
+            ctx.drawImage(imgBot, this.x, this.y, this.width, this.height);
+            
+            
         }
        chocaBot (){
         
-        if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
+        if (!(((jugador_x + 73) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 73) < this.y))) {
             return true
         }
            return false;
@@ -92,7 +110,7 @@
             
         }
         chocaFoc (){
-            if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
+            if (!(((jugador_x + 73) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 73) < this.y))) {
                 clearInterval(interval);
                 gameOver();
                
@@ -129,20 +147,21 @@
     let chocaCompr = false;
     class Obstacle {
         constructor(){
-            let maximaPosicio_x = 680;
-            this.width = 70;
-            this.height = 70;
-            this.x = Math.floor(Math.random() * (maximaPosicio_x - 70));
+            let maximaPosicio_x = 625;
+            this.width = 73;
+            this.height = 73;
+            this.x = Math.floor(Math.random() * (maximaPosicio_x - 73));
             this.y = 600;
 
         }
 
         pintar(){
-            ctx.fillStyle = 'black'
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            // ctx.fillStyle = 'black'
+            // ctx.fillRect(this.x, this.y, this.width, this.height);
+            ctx.drawImage(ratoli, this.x, this.y, this.width, this.height);
         }
         choca (){
-             if (!(((jugador_x + 40) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 40) < this.y))) {
+             if (!(((jugador_x + 73) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 73) < this.y))) {
                  clearInterval(interval);
                     gameOver();
                 
@@ -174,8 +193,9 @@
         //fondu
         ctx.drawImage(imgFondo, 0, 0, canvas.getAttribute("width"), canvas.getAttribute("height"));
         //jugador
-        ctx.fillStyle = 'green'
-        jugador= ctx.fillRect(jugador_x, jugador_y, 40, 40);
+        //ctx.fillStyle = 'green'
+        jugador= ctx.drawImage(fotoJugador, jugador_x, jugador_y, 73, 73); //ctx.fillRect(jugador_x, jugador_y, 73, 73);
+        
         //botelles
        
         // obstacles
@@ -191,14 +211,16 @@
         botellesArr.forEach((botella, k)=>{
             let comprovacio = botella.chocaBot();
             if (comprovacio){
-                console.log ("aaa", botellesArr);
+               
                 botellesArr.splice(k,1);
                 return;
-            } else if (botellesArr.length == 0){ //////////////////////////////////// proba (per variar no funciona) per preguntar Mariona
-                win();
-            }
+            } 
+            
             botella.pintarBot();
         })
+        if (botellesArr.length == 0){ //////////////////////////////////// proba (per variar no funciona) per preguntar Mariona
+            win();
+        }
 
         // Foc
         foc.forEach((mur)=>{
@@ -245,7 +267,7 @@
 
     function win(){
         ctx.fillStyle='blue'
-        ctx.fillRect (0,700,400,600);
+        ctx.fillRect (0,300,400,600);
     }
 
 
