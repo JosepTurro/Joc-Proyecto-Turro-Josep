@@ -43,6 +43,10 @@
     imgBot.setAttribute("src", "images/botella_a.png");
     const fotoJugador = document.createElement('img');
     fotoJugador.setAttribute("src", "images/foto_chill.png");
+    const winner = document.createElement('img');
+    winner.setAttribute("src", "images/winner.jpg")
+    const loser = document.createElement("img");
+    loser.setAttribute("src", "images/GameOver.jpg");
     //  const fotoJugadorChill = document.createElement('img');
     //  fotoJugador.setAttribute("src", "images/cara_enfado.png");
     const ratoli = document.createElement('img');
@@ -274,18 +278,24 @@
     // Definim el gameOver i el win
 
     function gameOver() {
-        ctx.fillStyle='green'
-        ctx.fillRect (0,0,400,600);
+        // ctx.fillStyle='green'
+        // ctx.fillRect (0,0,400,600);
+        ctx.drawImage(loser, 0, 0,canvas.getAttribute("width"), canvas.getAttribute("height") );
         clearInterval(intervalo);
         clearInterval(interval);
+        botellesArr.delete();
+        
         
     }
 
     function win(){
-        ctx.fillStyle='blue'
-        ctx.fillRect (0,300,400,600);
+        // ctx.fillStyle='blue'
+        // ctx.fillRect (0,300,400,600);
+        ctx.drawImage (winner, 0, 0,canvas.getAttribute("width"), canvas.getAttribute("height") );
         clearInterval(intervalo);
         clearInterval(interval);
+        botellesArr.delete();
+                
     }
 
     
