@@ -9,11 +9,11 @@
         setInterval(updateCountdown, 1000)
     };
 
-    let time;
+    
     
     const countDownEl = document.getElementById("countdown")
     const startingMinutes = 01;
-    time = startingMinutes * 60
+    let time = startingMinutes * 60
     function updateCountdown() {
     const minutes = Math.floor(time / 60)
     let seconds = time % 30
@@ -21,6 +21,8 @@
     countDownEl.innerHTML = `${seconds}`
     time--
     }
+
+    
 
     
     const canvas = document.getElementById("canvas");
@@ -35,6 +37,7 @@
     const imgFondo = document.createElement("img");
     imgFondo.setAttribute("src", "images/fondo_img.png");
     const imgMurFoc = document.createElement("img");
+    imgMurFoc.setAttribute("src", "images/ppp.png");
     // imgMurFoc.setAttributez
     let frames = 0;
     let interval;
@@ -83,8 +86,9 @@
             this.width =73;  
         }
         pintarFoc(){
-            ctx.fillStyle = 'orange'
-            ctx.fillRect (this.x, this.y, this.width, this.height);
+            // ctx.fillStyle = 'orange'
+            // ctx.fillRect (this.x, this.y, this.width, this.height);
+            ctx.drawImage(imgMurFoc, this.x, this.y, this.width, this.height);
             
         }
         chocaFoc (){
