@@ -2,11 +2,15 @@
 
 
 // window.onload = () => { 
+    let audi = new Audio();
+    audi.src= "audio/Eurythmics Annie Lennox Dave Stewart - Sweet Dreams (Are Made Of This) (Official Video).mp3"
     
     let intervalo;
     document.getElementById('start-button').onclick = () => {
         startGame();
        intervalo= setInterval(updateCountdown, 700)
+       audi.play();
+       
     };
 
     
@@ -51,6 +55,7 @@
     //  fotoJugador.setAttribute("src", "images/cara_enfado.png");
     const ratoli = document.createElement('img');
     ratoli.setAttribute("src", "images/ratolinet.png");
+    
     
     
     
@@ -116,6 +121,7 @@
             if (!(((jugador_x + 73) < this.x) || (jugador_y > (this.y + this.height)) || (jugador_x > (this.x + this.width)) || ((jugador_y + 73) < this.y))) {
                 clearInterval(interval);
                 gameOver();
+                
                
             }  
         }
@@ -284,6 +290,8 @@
         clearInterval(intervalo);
         clearInterval(interval);
         botellesArr.delete();
+        audi.pause();
+        
         
         
     }
